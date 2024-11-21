@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Livro{
+    char titulo [50];
+    char autor [40];
+    int anoDePublicacao;
+    int codigoIsbn;
+    char statusDeEmprestimo;
+};
+char usuario [20][3];
+int main (){
+    int opcaoSeecionada;
+    printf("\nSeja bem vindo ao BiblioHub, seu sistema de gerenciamento de biblioteca virtual.\n");
+    printf("Digite o número correspondente a opcao desejada:\n");
+    printf("1- Cadastrar livro.");
+    printf("2- Buscar livro.");
+    printf("3- Registrar emprestimo.");
+    printf("4- Registrar devolucao.");
+    printf("1- Cadastrar livro.");
+    printf("1- Cadastrar livro.");
+
+    return 0;
+}
