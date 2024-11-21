@@ -10,7 +10,38 @@ struct Livro
     char statusDeEmprestimo;
 };
 char usuario[20][3];
-int direcionamentoMenuInicial(int selecao){
+
+void sessaoLivros()
+{
+    int selecao = 0;
+    printf("\n******** Sessao livros ********");
+    do
+    {
+        printf("\nDigite a opcao desejada:\n");
+        printf("1 - Cadastrar livro.\n");
+        printf("2 - Buscar livro por id.\n");
+        printf("3 - Inativar livro.\n");
+        printf("0 - Retornar ao menu inicial.\n");
+        scanf("%d", &selecao);
+        switch (selecao)
+        {
+        case 1:
+            printf("Cadastrar livro.\n");
+            break;
+        case 2:
+            printf("Buscar livro.\n");
+            break;
+        case 3:
+            printf("Inativar livro.\n");
+            break;
+        default:
+            break;
+        }
+    } while (selecao != 0);
+}
+
+int direcionamentoMenuInicial(int selecao)
+{
     switch (selecao)
     {
     case 1:
@@ -18,8 +49,7 @@ int direcionamentoMenuInicial(int selecao){
         // sessaoLivros();
         break;
     case 2:
-        printf("\nSessao livros.\n");
-        // sessaoUsuarios();
+        sessaoLivros();
         break;
     default:
         break;
