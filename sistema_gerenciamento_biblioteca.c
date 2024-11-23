@@ -67,6 +67,9 @@ int main()
         printf("\nDigite o numero correspondente a opcao desejada:\n");
         printf("1 - Usuarios.\n");
         printf("2 - Livros.\n");
+        printf("3 - Registrar emprestimo.\n");
+        printf("4 - Registrar devolucao.\n");
+        printf("0 - Encerrar programa.\n");
         scanf("%d", &opcaoSelecionada);
         direcionamentoMenuInicial(opcaoSelecionada);
     } while (opcaoSelecionada != 0);
