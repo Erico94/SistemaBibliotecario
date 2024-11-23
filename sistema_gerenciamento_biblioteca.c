@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define totalDeLivros 81
 
 struct Livro
 {
@@ -7,7 +8,9 @@ struct Livro
     char autor[40];
     int anoDePublicacao;
     int codigoIsbn;
-    char statusDeEmprestimo;
+    int id;
+    char estaEmprestado;
+    char estaAtivoNoSistema;
 };
 char usuario[20][3];
 
