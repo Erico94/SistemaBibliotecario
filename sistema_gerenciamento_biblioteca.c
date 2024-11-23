@@ -49,8 +49,9 @@ void sessaoLivros()
     {
         printf("\nDigite a opcao desejada:\n");
         printf("1 - Cadastrar livro.\n");
-        printf("2 - Buscar livro por id.\n");
-        printf("3 - Inativar livro.\n");
+        printf("2 - Buscar livro por id ou ISBN.\n");
+        printf("3 - Editar informacoes do livro.\n");
+        printf("4 - Inativar livro.\n");
         printf("0 - Retornar ao menu inicial.\n");
         scanf("%d", &selecao);
         switch (selecao)
@@ -59,7 +60,7 @@ void sessaoLivros()
             printf("Cadastrar livro.\n");
             break;
         case 2:
-            printf("Buscar livro.\n");
+            buscaLivro();
             break;
         case 3:
             printf("Inativar livro.\n");
@@ -80,6 +81,13 @@ int direcionamentoMenuInicial(int selecao)
         break;
     case 2:
         sessaoLivros();
+        break;
+    case 3:
+        printf("\nRegistrar emprestimo.\n");
+        // sessaoLivros();
+        break;
+    case 4:
+        printf("\nRegistrar devolucao.\n");
         break;
     default:
         break;
