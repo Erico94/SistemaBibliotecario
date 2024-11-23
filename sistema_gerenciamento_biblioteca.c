@@ -13,6 +13,8 @@ struct Livro
     char estaAtivoNoSistema;
 };
 char usuario[20][3];
+struct Livro estoqueLivros[totalDeLivros];
+int quantidadeAtualEstoque;
 
 void sessaoLivros()
 {
