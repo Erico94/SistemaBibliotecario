@@ -16,6 +16,31 @@ char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
 int quantidadeAtualEstoque;
 
+void buscaLivro()
+{
+    int codigo = 0;
+    printf("Insira o id ou codigo ISBN:");
+    scanf("%d", &codigo);
+    for (int i = 0; i < quantidadeAtualEstoque; i++)
+    {
+        if (codigo == estoqueLivros[i].codigoIsbn || codigo == estoqueLivros[i].id)
+        {
+            printf("\nNome: %s", estoqueLivros[i].titulo);
+            printf("\nAutor: %s", estoqueLivros[i].autor);
+            printf("\nAno de publicacao: %d", estoqueLivros[i].anoDePublicacao);
+            printf("\nISBN: %d", estoqueLivros[i].codigoIsbn);
+            printf("\nID: %d", estoqueLivros[i].id);
+            printf("\nEmprestado: %c", estoqueLivros[i].estaEmprestado);
+            printf("\nAtivo no sistema: %c", estoqueLivros[i].estaAtivoNoSistema);
+            /*Posso dar as seguintes opções: registrar emprestimo/devolução; editar; desativar*/
+            return;
+        }
+        printf("Livro nao encontrado");
+        /*Posso dar as seguintes opções: cadastrar novo livro*/
+        return;
+    }
+}
+
 void sessaoLivros()
 {
     int selecao = 0;
