@@ -9,7 +9,34 @@ struct Livro
 };
 char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
-int quantidadeAtualEstoque;
+void cadastrarLivro()
+{
+    struct Livro novoLivro;
+
+    printf("Por favor, insira os dados solicitados abaixo.\n\n");
+    printf("\nTitulo do livro:");
+    scanf(" %[^\n]s", novoLivro.titulo);
+
+    printf("\nNome do autor:");
+    scanf(" %[^\n]s", novoLivro.autor);
+
+    printf("\nAno de publicacao:");
+    scanf("%d", &novoLivro.anoDePublicacao);
+
+    printf("\nISBN:");
+    scanf("%d", &novoLivro.codigoIsbn);
+
+    novoLivro.id = quantidadeAtualEstoque;
+    novoLivro.estaEmprestado = 'n';
+    novoLivro.estaAtivoNoSistema = 's';
+
+    estoqueLivros[quantidadeAtualEstoque] = novoLivro;
+    quantidadeAtualEstoque++;
+    printf("\n**** LIVRO SALVO COM SUCESSO ****");
+    printaLivroNaTela(novoLivro);
+
+    return;
+}
 
 void buscaLivro()
 {
@@ -20,13 +47,7 @@ void buscaLivro()
     {
         if (codigo == estoqueLivros[i].codigoIsbn || codigo == estoqueLivros[i].id)
         {
-            printf("\nNome: %s", estoqueLivros[i].titulo);
-            printf("\nAutor: %s", estoqueLivros[i].autor);
-            printf("\nAno de publicacao: %d", estoqueLivros[i].anoDePublicacao);
-            printf("\nISBN: %d", estoqueLivros[i].codigoIsbn);
-            printf("\nID: %d", estoqueLivros[i].id);
-            printf("\nEmprestado: %c", estoqueLivros[i].estaEmprestado);
-            printf("\nAtivo no sistema: %c", estoqueLivros[i].estaAtivoNoSistema);
+            printaLivroNaTela(estoqueLivros[i]);
             /*Posso dar as seguintes opções: registrar emprestimo/devolução; editar; desativar*/
             return;
         }
