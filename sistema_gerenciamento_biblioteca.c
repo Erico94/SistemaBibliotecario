@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 #define totalDeLivros 81
 
 struct Livro
@@ -73,7 +74,7 @@ void sessaoLivros()
         switch (selecao)
         {
         case 1:
-            printf("Cadastrar livro.\n");
+            cadastrarLivro();
             break;
         case 2:
             buscaLivro();
