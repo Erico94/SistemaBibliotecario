@@ -51,10 +51,10 @@ void buscaLivro()
             /*Posso dar as seguintes opções: registrar emprestimo/devolução; editar; desativar*/
             return;
         }
-        printf("Livro nao encontrado");
-        /*Posso dar as seguintes opções: cadastrar novo livro*/
-        return;
     }
+    printf("Livro nao encontrado");
+    /*Posso dar as seguintes opções: cadastrar novo livro*/
+    return;
 }
 
 void sessaoLivros()
