@@ -4,13 +4,8 @@
 
 struct Livro
 {
-    char titulo[50];
-    char autor[40];
-    int anoDePublicacao;
-    int codigoIsbn;
-    int id;
-    char estaEmprestado;
-    char estaAtivoNoSistema;
+    char titulo[50], autor[40], estaEmprestado, estaAtivoNoSistema;
+    int anoDePublicacao, codigoIsbn, id;
 };
 char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
