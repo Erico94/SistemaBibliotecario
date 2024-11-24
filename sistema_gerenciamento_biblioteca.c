@@ -10,6 +10,26 @@ struct Livro
 };
 char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
+int quantidadeAtualEstoque = 1;
+
+void printaLivroNaTela(struct Livro livro)
+{
+    printf("\n\n**************************************\n");
+    printf("**************************************");
+    printf("\nTitulo: %s", livro.titulo);
+    printf("\nAutor: %s", livro.autor);
+    printf("\nAno de publicacao: %d", livro.anoDePublicacao);
+    printf("\nISBN: %d", livro.codigoIsbn);
+    printf("\nID: %d", livro.id);
+    printf("\nEmprestado: %c", livro.estaEmprestado);
+    printf("\nAtivo no sistema: %c", livro.estaAtivoNoSistema);
+    printf("\n**************************************\n");
+    printf("**************************************\n\n");
+    printf("Pressione qualquer tecla para continuar.");
+    system("PAUSE");
+
+}
+
 void cadastrarLivro()
 {
     struct Livro novoLivro;
