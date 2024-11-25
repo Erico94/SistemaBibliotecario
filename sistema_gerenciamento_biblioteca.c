@@ -35,6 +35,7 @@ void cadastrarLivro()
     if (quantidadeAtualEstoque == totalDeLivros)
     {
         printf("\nQuantidade maxima de livros no estoque atingida.");
+        return;
     }
     
     struct Livro novoLivro;
