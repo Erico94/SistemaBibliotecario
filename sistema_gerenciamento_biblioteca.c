@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#define totalDeLivros 81
+#define totalDeLivros 80
 
 struct Livro
 {
@@ -32,6 +32,11 @@ void printaLivroNaTela(struct Livro livro)
 
 void cadastrarLivro()
 {
+    if (quantidadeAtualEstoque == totalDeLivros)
+    {
+        printf("\nQuantidade maxima de livros no estoque atingida.");
+    }
+    
     struct Livro novoLivro;
 
     printf("Por favor, insira os dados solicitados abaixo.\n\n");
