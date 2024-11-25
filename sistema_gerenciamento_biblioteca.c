@@ -35,6 +35,8 @@ void cadastrarLivro()
     if (quantidadeAtualEstoque == totalDeLivros)
     {
         printf("\nQuantidade maxima de livros no estoque atingida.");
+        printf("Pressione qualquer tecla para continuar.");
+        system("PAUSE");
         return;
     }
     
