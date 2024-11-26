@@ -95,6 +95,7 @@ void menuParaLivroEncontrado(struct Livro livro)
     } while (selecaoMenu != 0);
     return;
 }
+
 void buscaLivroPorId()
 {
     int codigo = 0;
@@ -112,6 +113,7 @@ void buscaLivroPorId()
     printf("Livro nao encontrado");
     return;
 }
+
 void buscaLivroPorIsbnOuTitulo()
 {
     char parametroDeBusca[50];
