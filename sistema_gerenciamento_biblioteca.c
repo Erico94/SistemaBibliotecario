@@ -27,6 +27,49 @@ void printaLivroNaTela(struct Livro livro)
     printf("**************************************\n\n");
     printf("Pressione qualquer tecla para continuar.");
     system("PAUSE");
+void menuParaLivroEncontrado(struct Livro livro)
+{
+    int selecaoMenu;
+    do
+    {
+        printf("\nDigite o numero correspondente a opcao desejada:");
+        printf("\n1 - Emprestar livro.");
+        printf("\n2 - Devolver livro.");
+        printf("\n3 - Editar informacoes do livro.");
+        printf("\n4 - Ativar livro no sistema.");
+        printf("\n5 - Desativar livro no sistema.");
+        printf("\n0 - Retornar ao menu anterior.\n");
+
+        scanf("%d", &selecaoMenu);
+
+        switch (selecaoMenu)
+        {
+        case 1:
+            livro.estaEmprestado = 's'; 
+            printaLivroNaTela(livro);
+            break;
+        case 2:
+            livro.estaEmprestado = 'n'; 
+            printaLivroNaTela(livro);
+            break;
+        case 3:
+            editarLivro(livro);
+            printaLivroNaTela(livro);
+            break;
+        case 4:
+            livro.estaAtivoNoSistema = 's';
+            printaLivroNaTela(livro);
+            break;
+        case 5:
+            livro.estaAtivoNoSistema = 'n';
+            printaLivroNaTela(livro);
+            break;
+        default:
+            break;
+        }
+    } while (selecaoMenu != 0);
+    return;
+}
 void buscaLivroPorId()
 {
     int codigo = 0;
