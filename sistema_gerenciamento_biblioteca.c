@@ -67,22 +67,31 @@ void cadastrarLivro()
     return;
 }
 
-void buscaLivro()
+void menuBuscaLivro()
 {
-    int codigo = 0;
-    printf("Insira o id ou codigo ISBN:");
-    scanf("%d", &codigo);
-    for (int i = 0; i < quantidadeAtualEstoque; i++)
+    int selecao;
+    do
     {
-        if (codigo == estoqueLivros[i].codigoIsbn || codigo == estoqueLivros[i].id)
+        printf("\ndigite o numero correspondente a opcao desejada:");
+        printf("\nQual metodo de busca deseja utilizar?");
+        printf("\n1 - Id.");
+        printf("\n2 - ISBN ou titulo.");
+        printf("\n0 - Retornar ao menu anterior.\n");
+        scanf("%d", &selecao);
+
+        switch (selecao)
         {
-            printaLivroNaTela(estoqueLivros[i]);
-            /*Posso dar as seguintes opções: registrar emprestimo/devolução; editar; desativar*/
-            return;
+        case 1:
+            buscaLivroPorId();
+            break;
+        case 2:
+            buscaLivroPorIsbnOuTitulo();
+            break;
+        default:
+            break;
         }
-    }
-    printf("Livro nao encontrado");
-    /*Posso dar as seguintes opções: cadastrar novo livro*/
+
+    } while (selecao != 0);
     return;
 }
 
