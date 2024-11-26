@@ -27,6 +27,31 @@ void printaLivroNaTela(struct Livro livro)
     printf("**************************************\n\n");
     printf("Pressione qualquer tecla para continuar.");
     system("PAUSE");
+}
+
+void editarLivro(struct Livro livro)
+{
+    struct Livro livroEditado;
+
+    printf("1 - Titulo:");
+    scanf(" %[^\n]s\n", livroEditado.titulo);
+    printf("2 - Autor:");
+    scanf(" %[^\n]s\n", livroEditado.autor);
+    printf("3 - ISBN:");
+    scanf(" %[^\n]s\n", livroEditado.codigoIsbn);
+    printf("4 - Ano de publicacao:");
+    scanf("%d", &livroEditado.anoDePublicacao);
+
+    strcpy(livro.titulo, livroEditado.titulo);
+    strcpy(livro.autor, livroEditado.autor);
+    strcpy(livro.codigoIsbn, livroEditado.codigoIsbn);
+    livro.anoDePublicacao = livroEditado.anoDePublicacao;
+
+    printf("Edicao concluida com sucesso!\n");
+    printaLivroNaTela(livro);
+
+}
+
 void menuParaLivroEncontrado(struct Livro livro)
 {
     int selecaoMenu;
