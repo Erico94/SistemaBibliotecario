@@ -5,8 +5,8 @@
 
 struct Livro
 {
-    char titulo[50], autor[40], estaEmprestado, estaAtivoNoSistema;
-    int anoDePublicacao, codigoIsbn, id;
+    char titulo[50], autor[40], codigoIsbn[15], estaEmprestado, estaAtivoNoSistema;
+    int anoDePublicacao, id;
 };
 char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
@@ -19,7 +19,7 @@ void printaLivroNaTela(struct Livro livro)
     printf("\nTitulo: %s", livro.titulo);
     printf("\nAutor: %s", livro.autor);
     printf("\nAno de publicacao: %d", livro.anoDePublicacao);
-    printf("\nISBN: %d", livro.codigoIsbn);
+    printf("\nISBN: %s", livro.codigoIsbn);
     printf("\nID: %d", livro.id);
     printf("\nEmprestado: %c", livro.estaEmprestado);
     printf("\nAtivo no sistema: %c", livro.estaAtivoNoSistema);
@@ -53,7 +53,7 @@ void cadastrarLivro()
     scanf("%d", &novoLivro.anoDePublicacao);
 
     printf("\nISBN:");
-    scanf("%d", &novoLivro.codigoIsbn);
+    scanf(" %[^\n]s", novoLivro.codigoIsbn);
 
     novoLivro.id = quantidadeAtualEstoque;
     novoLivro.estaEmprestado = 'n';
