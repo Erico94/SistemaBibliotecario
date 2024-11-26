@@ -35,11 +35,11 @@ void cadastrarLivro()
     if (quantidadeAtualEstoque == totalDeLivros)
     {
         printf("\nQuantidade maxima de livros no estoque atingida.");
-        printf("Pressione qualquer tecla para continuar.");
+        printf("\nPressione qualquer tecla para continuar.");
         system("PAUSE");
         return;
     }
-    
+
     struct Livro novoLivro;
 
     printf("Por favor, insira os dados solicitados abaixo.\n\n");
