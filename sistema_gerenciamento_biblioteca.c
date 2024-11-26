@@ -27,7 +27,22 @@ void printaLivroNaTela(struct Livro livro)
     printf("**************************************\n\n");
     printf("Pressione qualquer tecla para continuar.");
     system("PAUSE");
-
+void buscaLivroPorIsbnOuTitulo()
+{
+    char parametroDeBusca[50];
+    printf("Insira o titulo ou codigo ISBN:");
+    scanf("%s", parametroDeBusca);
+    for (int i = 0; i < quantidadeAtualEstoque; i++)
+    {
+        if (parametroDeBusca == estoqueLivros[i].codigoIsbn || parametroDeBusca == estoqueLivros[i].titulo)
+        {
+            printaLivroNaTela(estoqueLivros[i]);
+            menuParaLivroEncontrado(estoqueLivros[i]);
+            return;
+        }
+    }
+    printf("Livro nao encontrado");
+    return;
 }
 
 void cadastrarLivro()
