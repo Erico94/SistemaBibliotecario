@@ -12,7 +12,6 @@ struct Livro
     char titulo[50], autor[40], codigoIsbn[15], estaEmprestado, estaAtivoNoSistema;
     int anoDePublicacao, id;
 };
-char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
 int quantidadeAtualEstoque = 1;
 char nomeUsuario[MAX_USUARIOS][120];
@@ -21,7 +20,7 @@ int idUsuario[MAX_USUARIOS], quantidadeUsuariosAtuais = 0;
 
 void printaLivroNaTela(struct Livro livro)
 {
-    printf("\n\n**************************************\n");
+    printf("\n**************************************\n");
     printf("**************************************");
     printf("\nTitulo: %s", livro.titulo);
     printf("\nAutor: %s", livro.autor);
@@ -32,7 +31,6 @@ void printaLivroNaTela(struct Livro livro)
     printf("\nAtivo no sistema: %c", livro.estaAtivoNoSistema);
     printf("\n**************************************\n");
     printf("**************************************\n\n");
-    printf("Pressione qualquer tecla para continuar.");
     system("PAUSE");
 }
 
@@ -56,7 +54,6 @@ void editarLivro(struct Livro livro)
 
     printf("Edicao concluida com sucesso!\n");
     printaLivroNaTela(livro);
-
 }
 
 void menuParaLivroEncontrado(struct Livro livro)
