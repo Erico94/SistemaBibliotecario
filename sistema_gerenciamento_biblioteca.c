@@ -15,6 +15,9 @@ struct Livro
 char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
 int quantidadeAtualEstoque = 1;
+char nomeUsuario[MAX_USUARIOS][120];
+char enderecoUsuario[MAX_USUARIOS][150];
+int idUsuario[MAX_USUARIOS], quantidadeUsuariosAtuais = 0;
 
 void printaLivroNaTela(struct Livro livro)
 {
