@@ -3,6 +3,9 @@
 #include <conio.h>
 #include <string.h>
 #define totalDeLivros 80
+#define MAX_USUARIOS 100
+#define TAMANHO_NOME 120
+#define TAMANHO_ENDERECO 150
 
 struct Livro
 {
