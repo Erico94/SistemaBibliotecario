@@ -3,19 +3,24 @@
 #include <conio.h>
 #include <string.h>
 #define totalDeLivros 80
+#define MAX_USUARIOS 100
+#define TAMANHO_NOME 120
+#define TAMANHO_ENDERECO 150
 
 struct Livro
 {
     char titulo[50], autor[40], codigoIsbn[15], estaEmprestado, estaAtivoNoSistema;
     int anoDePublicacao, id;
 };
-char usuario[20][3];
 struct Livro estoqueLivros[totalDeLivros];
 int quantidadeAtualEstoque = 1;
+char nomeUsuario[MAX_USUARIOS][120];
+char enderecoUsuario[MAX_USUARIOS][150];
+int idUsuario[MAX_USUARIOS], quantidadeUsuariosAtuais = 0;
 
 void printaLivroNaTela(struct Livro livro)
 {
-    printf("\n\n**************************************\n");
+    printf("\n**************************************\n");
     printf("**************************************");
     printf("\nTitulo: %s", livro.titulo);
     printf("\nAutor: %s", livro.autor);
@@ -26,7 +31,6 @@ void printaLivroNaTela(struct Livro livro)
     printf("\nAtivo no sistema: %c", livro.estaAtivoNoSistema);
     printf("\n**************************************\n");
     printf("**************************************\n\n");
-    printf("Pressione qualquer tecla para continuar.");
     system("PAUSE");
 }
 
@@ -50,7 +54,6 @@ void editarLivro(struct Livro livro)
 
     printf("Edicao concluida com sucesso!\n");
     printaLivroNaTela(livro);
-
 }
 
 void menuParaLivroEncontrado(struct Livro livro)
@@ -223,13 +226,115 @@ void sessaoLivros()
     } while (selecao != 0);
 }
 
+void printaUsuarioNaTela(int indice)
+{
+    printf("\n**************************************\n");
+    printf("**************************************");
+    printf("\nNome do usuario:");
+    printf("%s", nomeUsuario[indice]);
+    printf("\nEndereco:");
+    printf("%s", enderecoUsuario[indice]);
+    printf("\nId:");
+    printf("%d\n", idUsuario[indice]);
+    printf("\n**************************************\n");
+    printf("**************************************");
+    system("PAUSE");
+}
+
+void cadastrarUsuario()
+{
+
+    if (quantidadeUsuariosAtuais >= MAX_USUARIOS)
+    {
+        printf("Numero m%cximo de usuarios atingido.", 133);
+        return;
+    }
+
+    printf("\nInsira os dados solicitados abaixo.");
+    printf("\nNome completo:");
+    scanf(" %[^\n]s", nomeUsuario[quantidadeUsuariosAtuais]);
+    printf("\nEndereco completo:");
+    scanf(" %[^\n]s", enderecoUsuario[quantidadeUsuariosAtuais]);
+    idUsuario[quantidadeUsuariosAtuais] = quantidadeUsuariosAtuais + 1;
+    printf("\n**** USUARIO SALVO COM SUCESSO ****");
+    printaUsuarioNaTela(quantidadeUsuariosAtuais);
+    quantidadeUsuariosAtuais++;
+}
+
+void buscarUsuario()
+{
+    int codigo = 0;
+    printf("Insira o id:");
+    scanf("%d", &codigo);
+    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    {
+        if (codigo == idUsuario[i])
+        {
+            codigo--;
+            printaUsuarioNaTela(codigo);
+            return;
+        }
+    }
+    printf("Usuario nao encontrado");
+    return;
+}
+
+void editarUsuario()
+{
+    int id = 0;
+    printf("Digite o id de usuario:");
+    scanf("%d", &id);
+    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    {
+        if (idUsuario[i] == id)
+        {
+            char novoEndereco[TAMANHO_ENDERECO];
+            printf("Digite o novo endereco: ");
+            scanf(" %[^\n]s", novoEndereco);
+            strcpy(enderecoUsuario[i], novoEndereco);
+            printf("\nEndereco alterado com sucesso.");
+            return;
+        }
+    }
+    printf("Id de usuario nao encontrado.");
+    return;
+}
+
+void sessaoUsuarios()
+{
+    int selecao = 0;
+    printf("\n******** Sessao usuarios ********");
+    do
+    {
+        printf("\nDigite a opcao desejada:\n");
+        printf("1 - Cadastrar usuario.\n");
+        printf("2 - Buscar usuario.\n");
+        printf("3 - Editar usuario.\n");
+        printf("0 - Retornar ao menu inicial.\n");
+        scanf("%d", &selecao);
+        switch (selecao)
+        {
+        case 1:
+            cadastrarUsuario();
+            break;
+        case 2:
+            buscarUsuario();
+            break;
+        case 3:
+            editarUsuario();
+            break;
+        default:
+            break;
+        }
+    } while (selecao != 0);
+}
+
 int direcionamentoMenuInicial(int selecao)
 {
     switch (selecao)
     {
     case 1:
-        printf("\nSessao usuarios.\n");
-        // sessaoLivros();
+        sessaoUsuarios();
         break;
     case 2:
         sessaoLivros();
