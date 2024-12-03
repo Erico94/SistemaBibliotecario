@@ -279,6 +279,26 @@ void buscarUsuario()
     return;
 }
 
+void editarUsuario()
+{
+    int id = 0;
+    printf("Digite o id de usuario:");
+    scanf("%d", &id);
+    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    {
+        if (idUsuario[i] == id)
+        {
+            char novoEndereco[TAMANHO_ENDERECO];
+            printf("Digite o novo endereco: ");
+            scanf(" %[^\n]s", novoEndereco);
+            strcpy(enderecoUsuario[i], novoEndereco);
+            printf("\nEndereco alterado com sucesso.");
+            return;
+        }
+    }
+    printf("Id de usuario nao encontrado.");
+    return;
+}
 
 void sessaoUsuarios()
 {
