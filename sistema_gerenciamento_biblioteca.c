@@ -240,6 +240,27 @@ void printaUsuarioNaTela(int indice)
     printf("**************************************");
     system("PAUSE");
 }
+
+void cadastrarUsuario()
+{
+
+    if (quantidadeUsuariosAtuais >= MAX_USUARIOS)
+    {
+        printf("Numero m%cximo de usuarios atingido.", 133);
+        return;
+    }
+
+    printf("\nInsira os dados solicitados abaixo.");
+    printf("\nNome completo:");
+    scanf(" %[^\n]s", nomeUsuario[quantidadeUsuariosAtuais]);
+    printf("\nEndereco completo:");
+    scanf(" %[^\n]s", enderecoUsuario[quantidadeUsuariosAtuais]);
+    idUsuario[quantidadeUsuariosAtuais] = quantidadeUsuariosAtuais + 1;
+    printf("\n**** USUARIO SALVO COM SUCESSO ****");
+    printaUsuarioNaTela(quantidadeUsuariosAtuais);
+    quantidadeUsuariosAtuais++;
+}
+
 void sessaoUsuarios()
 {
     int selecao = 0;
