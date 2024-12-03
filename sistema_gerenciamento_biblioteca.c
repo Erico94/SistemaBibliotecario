@@ -225,14 +225,41 @@ void sessaoLivros()
         }
     } while (selecao != 0);
 }
+void sessaoUsuarios()
+{
+    int selecao = 0;
+    printf("\n******** Sessao usuarios ********");
+    do
+    {
+        printf("\nDigite a opcao desejada:\n");
+        printf("1 - Cadastrar usuario.\n");
+        printf("2 - Buscar usuario.\n");
+        printf("3 - Editar usuario.\n");
+        printf("0 - Retornar ao menu inicial.\n");
+        scanf("%d", &selecao);
+        switch (selecao)
+        {
+        case 1:
+            cadastrarUsuario();
+            break;
+        case 2:
+            buscarUsuario();
+            break;
+        case 3:
+            editarUsuario();
+            break;
+        default:
+            break;
+        }
+    } while (selecao != 0);
+}
 
 int direcionamentoMenuInicial(int selecao)
 {
     switch (selecao)
     {
     case 1:
-        printf("\nSessao usuarios.\n");
-        // sessaoLivros();
+        sessaoUsuarios();
         break;
     case 2:
         sessaoLivros();
