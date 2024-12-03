@@ -261,6 +261,25 @@ void cadastrarUsuario()
     quantidadeUsuariosAtuais++;
 }
 
+void buscarUsuario()
+{
+    int codigo = 0;
+    printf("Insira o id:");
+    scanf("%d", &codigo);
+    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    {
+        if (codigo == idUsuario[i])
+        {
+            codigo--;
+            printaUsuarioNaTela(codigo);
+            return;
+        }
+    }
+    printf("Usuario nao encontrado");
+    return;
+}
+
+
 void sessaoUsuarios()
 {
     int selecao = 0;
