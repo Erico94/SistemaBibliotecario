@@ -225,6 +225,21 @@ void sessaoLivros()
         }
     } while (selecao != 0);
 }
+
+void printaUsuarioNaTela(int indice)
+{
+    printf("\n**************************************\n");
+    printf("**************************************");
+    printf("\nNome do usuario:");
+    printf("%s", nomeUsuario[indice]);
+    printf("\nEndereco:");
+    printf("%s", enderecoUsuario[indice]);
+    printf("\nId:");
+    printf("%d\n", idUsuario[indice]);
+    printf("\n**************************************\n");
+    printf("**************************************");
+    system("PAUSE");
+}
 void sessaoUsuarios()
 {
     int selecao = 0;
