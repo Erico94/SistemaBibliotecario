@@ -10,7 +10,7 @@
 struct Livro
 {
     char titulo[50], autor[40], codigoIsbn[15], estaEmprestado, estaAtivoNoSistema;
-    int anoDePublicacao, id;
+    int anoDePublicacao, id, emPosseDeUsuarioId;
 };
 struct Livro estoqueLivros[totalDeLivros];
 int quantidadeAtualEstoque = 1;
