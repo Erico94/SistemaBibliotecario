@@ -34,7 +34,18 @@ void printaLivroNaTela(struct Livro livro)
     system("PAUSE");
 }
 
-void editarLivro(struct Livro livro)
+void printaUsuarioNaTela(int indice)
+{
+    printf("\n**************************************\n");
+    printf("**************************************");
+    printf("\n*Nome do usuario: %s", nomeUsuario[indice]);
+    printf("\nEndereco: %s", enderecoUsuario[indice]);
+    printf("\nId: %d", idUsuario[indice]);
+    printf("\n**************************************\n");
+    printf("**************************************\n");
+    system("PAUSE");
+}
+
 {
     struct Livro livroEditado;
 
@@ -178,21 +189,6 @@ void sessaoLivros()
             break;
         }
     } while (selecao != 0);
-}
-
-void printaUsuarioNaTela(int indice)
-{
-    printf("\n**************************************\n");
-    printf("**************************************");
-    printf("\nNome do usuario:");
-    printf("%s", nomeUsuario[indice]);
-    printf("\nEndereco:");
-    printf("%s", enderecoUsuario[indice]);
-    printf("\nId:");
-    printf("%d\n", idUsuario[indice]);
-    printf("\n**************************************\n");
-    printf("**************************************");
-    system("PAUSE");
 }
 
 void cadastrarUsuario()
