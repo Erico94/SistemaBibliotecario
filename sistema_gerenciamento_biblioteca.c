@@ -13,7 +13,7 @@ struct Livro
     int anoDePublicacao, id, emPosseDeUsuarioId;
 };
 struct Livro estoqueLivros[totalDeLivros];
-int quantidadeAtualEstoque = 1;
+int quantidadeLivrosEstoque = 0;
 char nomeUsuario[MAX_USUARIOS][120];
 char enderecoUsuario[MAX_USUARIOS][150];
 int idUsuario[MAX_USUARIOS], quantidadeUsuariosAtuais = 0;
