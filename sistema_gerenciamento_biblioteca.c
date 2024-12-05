@@ -10,31 +10,100 @@
 struct Livro
 {
     char titulo[50], autor[40], codigoIsbn[15], estaEmprestado, estaAtivoNoSistema;
-    int anoDePublicacao, id;
+    int anoDePublicacao, id, emPosseDeUsuarioId;
 };
 struct Livro estoqueLivros[totalDeLivros];
-int quantidadeAtualEstoque = 1;
+int quantidadeLivrosEstoque = 0;
 char nomeUsuario[MAX_USUARIOS][120];
 char enderecoUsuario[MAX_USUARIOS][150];
 int idUsuario[MAX_USUARIOS], quantidadeUsuariosAtuais = 0;
 
-void printaLivroNaTela(struct Livro livro)
+void seedLivros()
+{
+    struct Livro livros[5] = {
+        {"O Senhor dos Aneis", "J.R.R. Tolkien", "1234567890123", 'n', 's', 1954, 1, 0},
+        {"1984", "George Orwell", "2345678901234", 'n', 's', 1949, 2, 0},
+        {"Dom Casmurro", "Machado de Assis", "3456789012345", 'n', 's', 1899, 3, 0},
+        {"Orgulho e Preconceito", "Jane Austen", "4567890123456", 'n', 's', 1813, 4, 0},
+        {"O Pequeno Principe", "Antoine de Saint-Exupéry", "5678901234567", 'n', 's', 1943, 5, 0}};
+
+    for (int i = 0; i < 5; i++)
+    {
+        estoqueLivros[quantidadeLivrosEstoque] = livros[i];
+        quantidadeLivrosEstoque++;
+    }
+
+    printf("\n5 livros adicionados com sucesso!\n");
+}
+
+void seedUsuarios()
+{
+    const char nomes[5][TAMANHO_NOME] = {
+        "Joao Silva",
+        "Maria Oliveira",
+        "Carlos Souza",
+        "Ana Pereira",
+        "Beatriz Santos"};
+    const char enderecos[5][TAMANHO_ENDERECO] = {
+        "Rua das Flores, 123",
+        "Avenida Paulista, 456",
+        "Praca da Liberdade, 789",
+        "Rua dos Bobos, 0",
+        "Estrada do Campo, 321"};
+
+    for (int i = 0; i < 5; i++)
+    {
+        strcpy(nomeUsuario[quantidadeUsuariosAtuais], nomes[i]);
+        strcpy(enderecoUsuario[quantidadeUsuariosAtuais], enderecos[i]);
+        idUsuario[quantidadeUsuariosAtuais] = quantidadeUsuariosAtuais + 1;
+        quantidadeUsuariosAtuais++;
+    }
+    printf("\n5 usuarios adicionados com sucesso!\n");
+}
+
+void printaLivroNaTela(struct Livro *livro)
 {
     printf("\n**************************************\n");
     printf("**************************************");
-    printf("\nTitulo: %s", livro.titulo);
-    printf("\nAutor: %s", livro.autor);
-    printf("\nAno de publicacao: %d", livro.anoDePublicacao);
-    printf("\nISBN: %s", livro.codigoIsbn);
-    printf("\nID: %d", livro.id);
-    printf("\nEmprestado: %c", livro.estaEmprestado);
-    printf("\nAtivo no sistema: %c", livro.estaAtivoNoSistema);
+    printf("\n*Titulo: %s", livro->titulo);
+    printf("\n*Autor: %s", livro->autor);
+    printf("\n*Ano de publicacao: %d", livro->anoDePublicacao);
+    printf("\n*ISBN: %s", livro->codigoIsbn);
+    printf("\n*ID: %d", livro->id);
+    printf("\n*Ativo no sistema: %c", livro->estaAtivoNoSistema);
+    if (livro->estaEmprestado == 's')
+    {
+        printf("\n*Esta em posse de usuario id: %d", livro->emPosseDeUsuarioId);
+    }
+    else
+    {
+        if (livro->estaAtivoNoSistema == 'n')
+        {
+            printf("\n*Livro inativo no sistema.");
+        }
+        else
+        {
+            printf("\n*Situacao: disponivel para emprestimo");
+        }
+    }
     printf("\n**************************************\n");
     printf("**************************************\n\n");
     system("PAUSE");
 }
 
-void editarLivro(struct Livro livro)
+void printaUsuarioNaTela(int indice)
+{
+    printf("\n**************************************\n");
+    printf("**************************************");
+    printf("\n*Nome do usuario: %s", nomeUsuario[indice]);
+    printf("\nEndereco: %s", enderecoUsuario[indice]);
+    printf("\nId: %d", idUsuario[indice]);
+    printf("\n**************************************\n");
+    printf("**************************************\n");
+    system("PAUSE");
+}
+
+void editarLivro(struct Livro *livro)
 {
     struct Livro livroEditado;
 
@@ -47,26 +116,95 @@ void editarLivro(struct Livro livro)
     printf("4 - Ano de publicacao:");
     scanf("%d", &livroEditado.anoDePublicacao);
 
-    strcpy(livro.titulo, livroEditado.titulo);
-    strcpy(livro.autor, livroEditado.autor);
-    strcpy(livro.codigoIsbn, livroEditado.codigoIsbn);
-    livro.anoDePublicacao = livroEditado.anoDePublicacao;
+    strcpy(livro->titulo, livroEditado.titulo);
+    strcpy(livro->autor, livroEditado.autor);
+    strcpy(livro->codigoIsbn, livroEditado.codigoIsbn);
+    livro->anoDePublicacao = livroEditado.anoDePublicacao;
 
-    printf("Edicao concluida com sucesso!\n");
+    printf("\n=== Edicao concluida com sucesso! ===\n");
     printaLivroNaTela(livro);
 }
 
-void menuParaLivroEncontrado(struct Livro livro)
+void emprestarLivro(struct Livro *livro)
+{
+    if (livro->estaAtivoNoSistema == 'n')
+    {
+        printf("\n=== Livro inativo no sistema, impossivel realizar emprestimo ===.");
+        system("PAUSE");
+        return;
+    }
+
+    int id;
+    printf("\nDigite o id do usuario para quem o livro sera emprestado:");
+    scanf("%d", &id);
+    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    {
+        if (id == idUsuario[i])
+        {
+            printaUsuarioNaTela(i);
+            int confirmacao;
+            printf("O usuario esta correto? Digite 1 para sim; 2 para nao:\n");
+            scanf("%d", &confirmacao);
+            if (confirmacao == 2)
+            {
+                printf("=== Emprestimo cancelado ===.");
+                system("PAUSE");
+                return;
+            }
+            printf("\n=== Emprestimo registrado com sucesso ===.");
+            printf("\nTitulo do livro: %s", livro->titulo);
+            printf("\nEmprestado para usuario: %s\n", nomeUsuario[i]);
+            livro->estaEmprestado = 's';
+            livro->emPosseDeUsuarioId = id;
+            system("PAUSE");
+            return;
+        }
+    }
+    printf("Usuario nao encontrado\n");
+    system("PAUSE");
+    return;
+}
+
+void devolverLivro(struct Livro *livro)
+{
+    livro->estaEmprestado = 'n';
+    livro->emPosseDeUsuarioId = 0;
+    printf("\n=== Devolucao do livro de id %d registrada com sucesso! ===", livro->id);
+    return;
+}
+
+void ativarLivro(struct Livro *livro)
+{
+    livro->estaAtivoNoSistema = 's';
+    printf("\n=== Livro ativado com sucesso ===.");
+    printaLivroNaTela(livro);
+    system("PAUSE");
+    return;
+}
+
+void desativarLivro(struct Livro *livro)
+{
+    if (livro->estaEmprestado == 's')
+    {
+        printf("\n=== O livro esta emprestado, impossivel desativa-lo no momento. ===");
+        return;
+    }
+    livro->estaAtivoNoSistema = 'n';
+    printf("\n=== Livro desativado com sucesso ===.");
+    printaLivroNaTela(livro);
+    system("PAUSE");
+    return;
+}
+
+void menuParaLivroEncontrado(struct Livro *livro)
 {
     int selecaoMenu;
     do
     {
         printf("\nDigite o numero correspondente a opcao desejada:");
-        printf("\n1 - Emprestar livro.");
-        printf("\n2 - Devolver livro.");
+        livro->estaEmprestado == 's' ? printf("\n1 - Devolver livro") : printf("\n1 - Emprestar livro.");
+        livro->estaAtivoNoSistema == 's' ? printf("\n2 - Desativar livro.") : printf("\n2 - Ativar livro.");
         printf("\n3 - Editar informacoes do livro.");
-        printf("\n4 - Ativar livro no sistema.");
-        printf("\n5 - Desativar livro no sistema.");
         printf("\n0 - Retornar ao menu anterior.\n");
 
         scanf("%d", &selecaoMenu);
@@ -74,23 +212,13 @@ void menuParaLivroEncontrado(struct Livro livro)
         switch (selecaoMenu)
         {
         case 1:
-            livro.estaEmprestado = 's'; 
-            printaLivroNaTela(livro);
+            livro->estaEmprestado == 's' ? devolverLivro(livro) : emprestarLivro(livro);
             break;
         case 2:
-            livro.estaEmprestado = 'n'; 
-            printaLivroNaTela(livro);
+            livro->estaAtivoNoSistema == 's' ? desativarLivro(livro) : ativarLivro(livro);
             break;
         case 3:
             editarLivro(livro);
-            printaLivroNaTela(livro);
-            break;
-        case 4:
-            livro.estaAtivoNoSistema = 's';
-            printaLivroNaTela(livro);
-            break;
-        case 5:
-            livro.estaAtivoNoSistema = 'n';
             printaLivroNaTela(livro);
             break;
         default:
@@ -105,43 +233,25 @@ void buscaLivroPorId()
     int codigo = 0;
     printf("Insira o id:");
     scanf("%d", &codigo);
-    for (int i = 0; i < quantidadeAtualEstoque; i++)
+    for (int i = 0; i < quantidadeLivrosEstoque; i++)
     {
         if (codigo == estoqueLivros[i].id)
         {
-            printaLivroNaTela(estoqueLivros[i]);
-            menuParaLivroEncontrado(estoqueLivros[i]);
+            struct Livro *plivro = &estoqueLivros[i];
+            printaLivroNaTela(plivro);
+            menuParaLivroEncontrado(plivro);
             return;
         }
     }
-    printf("Livro nao encontrado");
-    return;
-}
-
-void buscaLivroPorIsbnOuTitulo()
-{
-    char parametroDeBusca[50];
-    printf("Insira o titulo ou codigo ISBN:");
-    scanf("%s", parametroDeBusca);
-    for (int i = 0; i < quantidadeAtualEstoque; i++)
-    {
-        if (parametroDeBusca == estoqueLivros[i].codigoIsbn || parametroDeBusca == estoqueLivros[i].titulo)
-        {
-            printaLivroNaTela(estoqueLivros[i]);
-            menuParaLivroEncontrado(estoqueLivros[i]);
-            return;
-        }
-    }
-    printf("Livro nao encontrado");
+    printf("=== Livro nao encontrado. ===");
     return;
 }
 
 void cadastrarLivro()
 {
-    if (quantidadeAtualEstoque == totalDeLivros)
+    if (quantidadeLivrosEstoque == totalDeLivros)
     {
-        printf("\nQuantidade maxima de livros no estoque atingida.");
-        printf("\nPressione qualquer tecla para continuar.");
+        printf("\n=== Quantidade maxima de livros no estoque atingida. ===");
         system("PAUSE");
         return;
     }
@@ -161,55 +271,28 @@ void cadastrarLivro()
     printf("\nISBN:");
     scanf(" %[^\n]s", novoLivro.codigoIsbn);
 
-    novoLivro.id = quantidadeAtualEstoque;
+    novoLivro.id = quantidadeLivrosEstoque + 1;
     novoLivro.estaEmprestado = 'n';
     novoLivro.estaAtivoNoSistema = 's';
 
-    estoqueLivros[quantidadeAtualEstoque] = novoLivro;
-    quantidadeAtualEstoque++;
-    printf("\n**** LIVRO SALVO COM SUCESSO ****");
-    printaLivroNaTela(novoLivro);
+    estoqueLivros[quantidadeLivrosEstoque] = novoLivro;
+    struct Livro *plivro = &estoqueLivros[quantidadeLivrosEstoque];
+    quantidadeLivrosEstoque++;
+    printf("\n=== LIVRO SALVO COM SUCESSO. ===");
+    printaLivroNaTela(plivro);
 
-    return;
-}
-
-void menuBuscaLivro()
-{
-    int selecao;
-    do
-    {
-        printf("\ndigite o numero correspondente a opcao desejada:");
-        printf("\nQual metodo de busca deseja utilizar?");
-        printf("\n1 - Id.");
-        printf("\n2 - ISBN ou titulo.");
-        printf("\n0 - Retornar ao menu anterior.\n");
-        scanf("%d", &selecao);
-
-        switch (selecao)
-        {
-        case 1:
-            buscaLivroPorId();
-            break;
-        case 2:
-            buscaLivroPorIsbnOuTitulo();
-            break;
-        default:
-            break;
-        }
-
-    } while (selecao != 0);
     return;
 }
 
 void sessaoLivros()
 {
     int selecao = 0;
-    printf("\n******** Sessao livros ********");
+    printf("\n=== Sessao livros ===");
     do
     {
         printf("\nDigite a opcao desejada:\n");
         printf("1 - Cadastrar livro.\n");
-        printf("2 - Buscar livro.\n");
+        printf("2 - Buscar livro por ID.\n");
         printf("0 - Retornar ao menu inicial.\n");
         scanf("%d", &selecao);
         switch (selecao)
@@ -218,7 +301,7 @@ void sessaoLivros()
             cadastrarLivro();
             break;
         case 2:
-            menuBuscaLivro();
+            buscaLivroPorId();
             break;
         default:
             break;
@@ -226,27 +309,12 @@ void sessaoLivros()
     } while (selecao != 0);
 }
 
-void printaUsuarioNaTela(int indice)
-{
-    printf("\n**************************************\n");
-    printf("**************************************");
-    printf("\nNome do usuario:");
-    printf("%s", nomeUsuario[indice]);
-    printf("\nEndereco:");
-    printf("%s", enderecoUsuario[indice]);
-    printf("\nId:");
-    printf("%d\n", idUsuario[indice]);
-    printf("\n**************************************\n");
-    printf("**************************************");
-    system("PAUSE");
-}
-
 void cadastrarUsuario()
 {
 
     if (quantidadeUsuariosAtuais >= MAX_USUARIOS)
     {
-        printf("Numero m%cximo de usuarios atingido.", 133);
+        printf("=== Numero m%cximo de usuarios atingido. ===", 133);
         return;
     }
 
@@ -256,7 +324,7 @@ void cadastrarUsuario()
     printf("\nEndereco completo:");
     scanf(" %[^\n]s", enderecoUsuario[quantidadeUsuariosAtuais]);
     idUsuario[quantidadeUsuariosAtuais] = quantidadeUsuariosAtuais + 1;
-    printf("\n**** USUARIO SALVO COM SUCESSO ****");
+    printf("\n=== USUARIO SALVO COM SUCESSO. ===");
     printaUsuarioNaTela(quantidadeUsuariosAtuais);
     quantidadeUsuariosAtuais++;
 }
@@ -275,7 +343,7 @@ void buscarUsuario()
             return;
         }
     }
-    printf("Usuario nao encontrado");
+    printf("=== Usuario nao encontrado. ===");
     return;
 }
 
@@ -292,11 +360,11 @@ void editarUsuario()
             printf("Digite o novo endereco: ");
             scanf(" %[^\n]s", novoEndereco);
             strcpy(enderecoUsuario[i], novoEndereco);
-            printf("\nEndereco alterado com sucesso.");
+            printf("\n=== Endereco alterado com sucesso. ===");
             return;
         }
     }
-    printf("Id de usuario nao encontrado.");
+    printf("=== Usuario nao encontrado. ===");
     return;
 }
 
@@ -339,13 +407,6 @@ int direcionamentoMenuInicial(int selecao)
     case 2:
         sessaoLivros();
         break;
-    case 3:
-        printf("\nRegistrar emprestimo.\n");
-        // sessaoLivros();
-        break;
-    case 4:
-        printf("\nRegistrar devolucao.\n");
-        break;
     default:
         break;
     }
@@ -354,21 +415,21 @@ int direcionamentoMenuInicial(int selecao)
 
 int main()
 {
+    seedLivros();
+    seedUsuarios();
     int opcaoSelecionada = 0;
 
     printf("\nSeja bem vindo ao BiblioHub, seu sistema de gerenciamento de biblioteca.\n");
     do
     {
-        printf("\nDigite o numero correspondente a opcao desejada:\n");
+        printf("\n=== Digite o numero correspondente a opcao desejada: ===\n");
         printf("1 - Usuarios.\n");
         printf("2 - Livros.\n");
-        printf("3 - Registrar emprestimo.\n");
-        printf("4 - Registrar devolucao.\n");
         printf("0 - Encerrar programa.\n");
         scanf("%d", &opcaoSelecionada);
         direcionamentoMenuInicial(opcaoSelecionada);
     } while (opcaoSelecionada != 0);
-    printf("\nEncerando programa.");
+    printf("\nEncerando programa...");
     system("PAUSE");
     return 0;
 }
