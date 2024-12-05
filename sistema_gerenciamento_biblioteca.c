@@ -58,7 +58,6 @@ void seedUsuarios()
         idUsuario[quantidadeUsuariosAtuais] = quantidadeUsuariosAtuais + 1;
         quantidadeUsuariosAtuais++;
     }
-
     printf("\n5 usuarios adicionados com sucesso!\n");
 }
 
