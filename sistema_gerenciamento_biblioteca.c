@@ -3,20 +3,20 @@
 #include <conio.h>
 #include <string.h>
 #define totalDeLivros 80
-#define MAX_USUARIOS 100
+#define MAX_CLIENTES 100
 #define TAMANHO_NOME 120
 #define TAMANHO_ENDERECO 150
 
 struct Livro
 {
     char titulo[50], autor[40], codigoIsbn[15], estaEmprestado, estaAtivoNoSistema;
-    int anoDePublicacao, id, emPosseDeUsuarioId;
+    int anoDePublicacao, id, emPosseDeClienteId;
 };
 struct Livro estoqueLivros[totalDeLivros];
 int quantidadeLivrosEstoque = 0;
-char nomeUsuario[MAX_USUARIOS][120];
-char enderecoUsuario[MAX_USUARIOS][150];
-int idUsuario[MAX_USUARIOS], quantidadeUsuariosAtuais = 0;
+char nomeCliente[MAX_CLIENTES][120];
+char enderecoCliente[MAX_CLIENTES][150];
+int idCliente[MAX_CLIENTES], quantidadeClientesAtuais = 0;
 
 void seedLivros()
 {
@@ -36,7 +36,7 @@ void seedLivros()
     printf("\n5 livros adicionados com sucesso!\n");
 }
 
-void seedUsuarios()
+void seedClientes()
 {
     const char nomes[5][TAMANHO_NOME] = {
         "Joao Silva",
@@ -53,15 +53,15 @@ void seedUsuarios()
 
     for (int i = 0; i < 5; i++)
     {
-        strcpy(nomeUsuario[quantidadeUsuariosAtuais], nomes[i]);
-        strcpy(enderecoUsuario[quantidadeUsuariosAtuais], enderecos[i]);
-        idUsuario[quantidadeUsuariosAtuais] = quantidadeUsuariosAtuais + 1;
-        quantidadeUsuariosAtuais++;
+        strcpy(nomeCliente[quantidadeClientesAtuais], nomes[i]);
+        strcpy(enderecoCliente[quantidadeClientesAtuais], enderecos[i]);
+        idCliente[quantidadeClientesAtuais] = quantidadeClientesAtuais + 1;
+        quantidadeClientesAtuais++;
     }
-    printf("\n5 usuarios adicionados com sucesso!\n");
+    printf("\n5 clientes adicionados com sucesso!\n");
 }
 
-void printaLivroNaTela(struct Livro *livro)
+void exibirLivro(struct Livro *livro)
 {
     printf("\n**************************************\n");
     printf("**************************************");
@@ -73,7 +73,7 @@ void printaLivroNaTela(struct Livro *livro)
     printf("\n*Ativo no sistema: %c", livro->estaAtivoNoSistema);
     if (livro->estaEmprestado == 's')
     {
-        printf("\n*Esta em posse de usuario id: %d", livro->emPosseDeUsuarioId);
+        printf("\n*Esta em posse de cliente id: %d", livro->emPosseDeClienteId);
     }
     else
     {
@@ -91,13 +91,13 @@ void printaLivroNaTela(struct Livro *livro)
     system("PAUSE");
 }
 
-void printaUsuarioNaTela(int indice)
+void exibirCliente(int indice)
 {
     printf("\n**************************************\n");
     printf("**************************************");
-    printf("\n*Nome do usuario: %s", nomeUsuario[indice]);
-    printf("\nEndereco: %s", enderecoUsuario[indice]);
-    printf("\nId: %d", idUsuario[indice]);
+    printf("\n*Nome do cliente: %s", nomeCliente[indice]);
+    printf("\nEndereco: %s", enderecoCliente[indice]);
+    printf("\nId: %d", idCliente[indice]);
     printf("\n**************************************\n");
     printf("**************************************\n");
     system("PAUSE");
@@ -122,7 +122,7 @@ void editarLivro(struct Livro *livro)
     livro->anoDePublicacao = livroEditado.anoDePublicacao;
 
     printf("\n=== Edicao concluida com sucesso! ===\n");
-    printaLivroNaTela(livro);
+    exibirLivro(livro);
 }
 
 void emprestarLivro(struct Livro *livro)
@@ -135,15 +135,15 @@ void emprestarLivro(struct Livro *livro)
     }
 
     int id;
-    printf("\nDigite o id do usuario para quem o livro sera emprestado:");
+    printf("\nDigite o id do cliente para quem o livro sera emprestado:");
     scanf("%d", &id);
-    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    for (int i = 0; i < quantidadeClientesAtuais; i++)
     {
-        if (id == idUsuario[i])
+        if (id == idCliente[i])
         {
-            printaUsuarioNaTela(i);
+            exibirCliente(i);
             int confirmacao;
-            printf("O usuario esta correto? Digite 1 para sim; 2 para nao:\n");
+            printf("O cliente esta correto? Digite 1 para sim; 2 para nao:\n");
             scanf("%d", &confirmacao);
             if (confirmacao == 2)
             {
@@ -153,14 +153,14 @@ void emprestarLivro(struct Livro *livro)
             }
             printf("\n=== Emprestimo registrado com sucesso ===.");
             printf("\nTitulo do livro: %s", livro->titulo);
-            printf("\nEmprestado para usuario: %s\n", nomeUsuario[i]);
+            printf("\nEmprestado para cliente: %s\n", nomeCliente[i]);
             livro->estaEmprestado = 's';
-            livro->emPosseDeUsuarioId = id;
+            livro->emPosseDeClienteId = id;
             system("PAUSE");
             return;
         }
     }
-    printf("Usuario nao encontrado\n");
+    printf("Cliente nao encontrado\n");
     system("PAUSE");
     return;
 }
@@ -168,7 +168,7 @@ void emprestarLivro(struct Livro *livro)
 void devolverLivro(struct Livro *livro)
 {
     livro->estaEmprestado = 'n';
-    livro->emPosseDeUsuarioId = 0;
+    livro->emPosseDeClienteId = 0;
     printf("\n=== Devolucao do livro de id %d registrada com sucesso! ===", livro->id);
     return;
 }
@@ -177,7 +177,7 @@ void ativarLivro(struct Livro *livro)
 {
     livro->estaAtivoNoSistema = 's';
     printf("\n=== Livro ativado com sucesso ===.");
-    printaLivroNaTela(livro);
+    exibirLivro(livro);
     system("PAUSE");
     return;
 }
@@ -191,7 +191,7 @@ void desativarLivro(struct Livro *livro)
     }
     livro->estaAtivoNoSistema = 'n';
     printf("\n=== Livro desativado com sucesso ===.");
-    printaLivroNaTela(livro);
+    exibirLivro(livro);
     system("PAUSE");
     return;
 }
@@ -201,7 +201,7 @@ void menuParaLivroEncontrado(struct Livro *livro)
     int selecaoMenu;
     do
     {
-        printf("\nDigite o numero correspondente a opcao desejada:");
+        printf("\nDigite o numero correspondente a opcao desejada para o livro %s:", livro->titulo);
         livro->estaEmprestado == 's' ? printf("\n1 - Devolver livro") : printf("\n1 - Emprestar livro.");
         livro->estaAtivoNoSistema == 's' ? printf("\n2 - Desativar livro.") : printf("\n2 - Ativar livro.");
         printf("\n3 - Editar informacoes do livro.");
@@ -219,7 +219,7 @@ void menuParaLivroEncontrado(struct Livro *livro)
             break;
         case 3:
             editarLivro(livro);
-            printaLivroNaTela(livro);
+            exibirLivro(livro);
             break;
         default:
             break;
@@ -228,7 +228,7 @@ void menuParaLivroEncontrado(struct Livro *livro)
     return;
 }
 
-void buscaLivroPorId()
+void buscarLivro()
 {
     int codigo = 0;
     printf("Insira o id:");
@@ -238,7 +238,7 @@ void buscaLivroPorId()
         if (codigo == estoqueLivros[i].id)
         {
             struct Livro *plivro = &estoqueLivros[i];
-            printaLivroNaTela(plivro);
+            exibirLivro(plivro);
             menuParaLivroEncontrado(plivro);
             return;
         }
@@ -279,7 +279,7 @@ void cadastrarLivro()
     struct Livro *plivro = &estoqueLivros[quantidadeLivrosEstoque];
     quantidadeLivrosEstoque++;
     printf("\n=== LIVRO SALVO COM SUCESSO. ===");
-    printaLivroNaTela(plivro);
+    exibirLivro(plivro);
 
     return;
 }
@@ -301,7 +301,7 @@ void sessaoLivros()
             cadastrarLivro();
             break;
         case 2:
-            buscaLivroPorId();
+            buscarLivro();
             break;
         default:
             break;
@@ -309,87 +309,87 @@ void sessaoLivros()
     } while (selecao != 0);
 }
 
-void cadastrarUsuario()
+void cadastrarCliente()
 {
 
-    if (quantidadeUsuariosAtuais >= MAX_USUARIOS)
+    if (quantidadeClientesAtuais >= MAX_CLIENTES)
     {
-        printf("=== Numero m%cximo de usuarios atingido. ===", 133);
+        printf("=== Numero m%cximo de clientes atingido. ===", 133);
         return;
     }
 
     printf("\nInsira os dados solicitados abaixo.");
     printf("\nNome completo:");
-    scanf(" %[^\n]s", nomeUsuario[quantidadeUsuariosAtuais]);
+    scanf(" %[^\n]s", nomeCliente[quantidadeClientesAtuais]);
     printf("\nEndereco completo:");
-    scanf(" %[^\n]s", enderecoUsuario[quantidadeUsuariosAtuais]);
-    idUsuario[quantidadeUsuariosAtuais] = quantidadeUsuariosAtuais + 1;
-    printf("\n=== USUARIO SALVO COM SUCESSO. ===");
-    printaUsuarioNaTela(quantidadeUsuariosAtuais);
-    quantidadeUsuariosAtuais++;
+    scanf(" %[^\n]s", enderecoCliente[quantidadeClientesAtuais]);
+    idCliente[quantidadeClientesAtuais] = quantidadeClientesAtuais + 1;
+    printf("\n=== CLIENTE SALVO COM SUCESSO. ===");
+    exibirCliente(quantidadeClientesAtuais);
+    quantidadeClientesAtuais++;
 }
 
-void buscarUsuario()
+void buscarCliente()
 {
     int codigo = 0;
     printf("Insira o id:");
     scanf("%d", &codigo);
-    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    for (int i = 0; i < quantidadeClientesAtuais; i++)
     {
-        if (codigo == idUsuario[i])
+        if (codigo == idCliente[i])
         {
             codigo--;
-            printaUsuarioNaTela(codigo);
+            exibirCliente(codigo);
             return;
         }
     }
-    printf("=== Usuario nao encontrado. ===");
+    printf("=== Cliente nao encontrado. ===");
     return;
 }
 
-void editarUsuario()
+void editarCliente()
 {
     int id = 0;
-    printf("Digite o id de usuario:");
+    printf("Digite o id de cliente:");
     scanf("%d", &id);
-    for (int i = 0; i < quantidadeUsuariosAtuais; i++)
+    for (int i = 0; i < quantidadeClientesAtuais; i++)
     {
-        if (idUsuario[i] == id)
+        if (idCliente[i] == id)
         {
             char novoEndereco[TAMANHO_ENDERECO];
             printf("Digite o novo endereco: ");
             scanf(" %[^\n]s", novoEndereco);
-            strcpy(enderecoUsuario[i], novoEndereco);
+            strcpy(enderecoCliente[i], novoEndereco);
             printf("\n=== Endereco alterado com sucesso. ===");
             return;
         }
     }
-    printf("=== Usuario nao encontrado. ===");
+    printf("=== Cliente nao encontrado. ===");
     return;
 }
 
-void sessaoUsuarios()
+void sessaoClientes()
 {
     int selecao = 0;
-    printf("\n******** Sessao usuarios ********");
+    printf("\n******** Sessao clientes ********");
     do
     {
         printf("\nDigite a opcao desejada:\n");
-        printf("1 - Cadastrar usuario.\n");
-        printf("2 - Buscar usuario.\n");
-        printf("3 - Editar usuario.\n");
+        printf("1 - Cadastrar cliente.\n");
+        printf("2 - Buscar cliente.\n");
+        printf("3 - Editar cliente.\n");
         printf("0 - Retornar ao menu inicial.\n");
         scanf("%d", &selecao);
         switch (selecao)
         {
         case 1:
-            cadastrarUsuario();
+            cadastrarCliente();
             break;
         case 2:
-            buscarUsuario();
+            buscarCliente();
             break;
         case 3:
-            editarUsuario();
+            editarCliente();
             break;
         default:
             break;
@@ -402,7 +402,7 @@ int direcionamentoMenuInicial(int selecao)
     switch (selecao)
     {
     case 1:
-        sessaoUsuarios();
+        sessaoClientes();
         break;
     case 2:
         sessaoLivros();
@@ -416,14 +416,14 @@ int direcionamentoMenuInicial(int selecao)
 int main()
 {
     seedLivros();
-    seedUsuarios();
+    seedClientes();
     int opcaoSelecionada = 0;
 
     printf("\nSeja bem vindo ao BiblioHub, seu sistema de gerenciamento de biblioteca.\n");
     do
     {
         printf("\n=== Digite o numero correspondente a opcao desejada: ===\n");
-        printf("1 - Usuarios.\n");
+        printf("1 - Clientes.\n");
         printf("2 - Livros.\n");
         printf("0 - Encerrar programa.\n");
         scanf("%d", &opcaoSelecionada);
