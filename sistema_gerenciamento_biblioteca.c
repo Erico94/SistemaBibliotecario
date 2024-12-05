@@ -155,34 +155,6 @@ void cadastrarLivro()
     return;
 }
 
-void menuBuscaLivro()
-{
-    int selecao;
-    do
-    {
-        printf("\ndigite o numero correspondente a opcao desejada:");
-        printf("\nQual metodo de busca deseja utilizar?");
-        printf("\n1 - Id.");
-        printf("\n2 - ISBN ou titulo.");
-        printf("\n0 - Retornar ao menu anterior.\n");
-        scanf("%d", &selecao);
-
-        switch (selecao)
-        {
-        case 1:
-            buscaLivroPorId();
-            break;
-        case 2:
-            buscaLivroPorIsbnOuTitulo();
-            break;
-        default:
-            break;
-        }
-
-    } while (selecao != 0);
-    return;
-}
-
 void sessaoLivros()
 {
     int selecao = 0;
